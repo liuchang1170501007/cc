@@ -1,0 +1,46 @@
+#if 0
+class QLabelClock: public QLabel{
+public:
+    QTimer *timer;
+    QLabelClock(QWidget *parent):
+        QLabel(parent)
+    {
+        this->setText(this->now());
+
+        timer = new QTimer(parent);
+        timer->start(1000);
+        connect(timer,&QTimer::timeout,this,&QLabelClock::refresh);
+    }
+    QString now()
+    {
+        return(QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss dddd"));
+    }
+    void refresh()
+    {
+        this->setText(this->now());
+    }
+};
+
+#endif
+class QLabelClock: public QLabel
+{
+public:
+    QTimer *timer;
+    QLabelClock(QWidget *parent);
+    void refresh();
+};
+
+QLabelClock::QLabelClock(QWidget *parent):QLabel(parent)
+{
+    this->setText(QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss dddd"));
+
+    timer = new QTimer(parent);
+    timer->start(1000);
+    connect(timer,&QTimer::timeout,this,&QLabelClock::refresh);
+}
+
+void QLabelClock::refresh()
+{
+    this->setText(QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss dddd"));
+
+}
